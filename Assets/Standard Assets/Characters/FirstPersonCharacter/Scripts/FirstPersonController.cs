@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
+using TMPro;
+
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -41,6 +44,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
+        private int count;
+        public TextMeshProUGUI countText;
+        public GameObject winTextObject;
+
 
         // Use this for initialization
         private void Start()
@@ -55,6 +62,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+                    count = 0;
+        SetCountText();
+        winTextObject.SetActive(false);
         }
 
 
@@ -157,6 +167,28 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_NextStep = m_StepCycle + m_StepInterval;
 
             PlayFootStepAudio();
+        }
+        void SetCountText()
+        {
+            countText.text = "Count:" + count.ToString();
+            if (count>=10)
+            {
+                SceneManager.LoadScene("WinScene");
+
+            }
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.CompareTag("PickUp"))
+            {
+                other.gameObject.SetActive(false);
+                count += 1;
+                SetCountText();
+            }
+            if(other.gameObject.CompareTag("enemy")){
+                SceneManager.LoadScene("LoseScene");
+            }
+
         }
 
 
