@@ -46,7 +46,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
         private int count;
         public TextMeshProUGUI countText;
-        public GameObject winTextObject;
 
 
         // Use this for initialization
@@ -64,7 +63,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , m_Camera.transform);
                     count = 0;
         SetCountText();
-        winTextObject.SetActive(false);
         }
 
 
